@@ -29,8 +29,8 @@
 (load-theme 'tango-dark t)
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
+			 ("org" . "https://orgmode.org/elpa/")
+			 ("elpa" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 (unless package-archive-contents
   (package-refresh-contents))
@@ -75,11 +75,11 @@
   :ensure t)
 
 (use-package helm
-  :bind 
+  :bind
   :bind (("M-x" . helm-M-x)
 	 (:map helm-map
-              ("C-k" . helm-next-line)
-              ("C-l" . helm-previous-line)))
+	      ("C-k" . helm-next-line)
+	      ("C-l" . helm-previous-line)))
   :ensure t)
 
 (use-package projectile
@@ -88,10 +88,6 @@
 (use-package idle-highlight-mode
   :hook (prog-mode . idle-highlight-mode)
   :config (setq idle-highlight-visible-buffers t)
-  :ensure t)
-
-(use-package spacemacs-theme
-  :config (load-theme 'spacemacs-dark t)
   :ensure t)
 
 (use-package lsp-mode
@@ -108,7 +104,14 @@
 
 (use-package rust-mode
   :ensure t)
-  
+
+;; theme
+(set-frame-parameter (selected-frame) 'alpha '(96 100))
+
+(use-package spacemacs-theme
+  :config (load-theme 'spacemacs-dark t)
+  :ensure t)
+
 
 ;; navigation
 (global-set-key (kbd "C-j") 'backward-char)
@@ -121,16 +124,19 @@
 (global-set-key (kbd "M-l") 'move-end-of-line)
 (global-set-key (kbd "M-ö") 'forward-word)
 
-(set-frame-parameter (selected-frame) 'alpha '(96 100))
+(global-set-key (kbd "C-i") 'recenter-top-bottom)
 
 ;; Buffer management
 (global-set-key (kbd "ĸ") 'kill-this-buffer)
 (global-set-key (kbd "ł") (lambda () (interactive) (switch-to-buffer nil)))
 
 ;; window management
-(global-set-key (kbd "C-(") 'split-window-right-and-focus)
+(global-set-key (kbd "C-(") '(lambda () (interactive) (split-window-right) (other-window 1)))
+(global-set-key (kbd "C-)") '(lambda () (interactive) (split-window-below) (other-window 1)))
+(global-set-key (kbd "ð") 'delete-window)
 (global-set-key (kbd "C-)") 'split-window-below-and-focus)
 (global-set-key (kbd "ŧ") 'tab-new)
+(global-set-key (kbd "¢") 'tab-close)
 
 ;; hotkeys
 (global-set-key (kbd "←") 'undo)
@@ -138,6 +144,10 @@
 (global-set-key (kbd "ħ") 'replace-string)
 (global-set-key (kbd "C-x C-r") 'rectangle-mark-mode)
 (global-set-key (kbd "C-x C-l") 'string-rectangle)
+(global-set-key (kbd "ſ") 'whitespace-cleanup)
+;; (global-set-key (kbd "M-p") 'drag-stuff-up)
+;; (global-set-key (kbd "M-n") 'drag-stuff-down)
+
 
 
 ;; my functions
@@ -175,24 +185,24 @@
   "Establish a connection with OpenAI."
   (interactive "sAsk OpenAI:")
   (setq response (shell-command-to-string (concat "print $(curl https://api.openai.com/v1/completions \
-                 -H 'Content-Type: application/json' \
-                 -H 'Authorization: Bearer ' \
-                 -d '{
-                 \"model\": \"text-davinci-003\",
-                 \"prompt\": \"" prompt "\",
-                 \"max_tokens\": 500,
-                 \"temperature\": 0
-                 }' 2>/dev/null" "| jq '.choices[0].text' )"))
+		 -H 'Content-Type: application/json' \
+		 -H 'Authorization: Bearer ' \
+		 -d '{
+		 \"model\": \"text-davinci-003\",
+		 \"prompt\": \"" prompt "\",
+		 \"max_tokens\": 500,
+		 \"temperature\": 0
+		 }' 2>/dev/null" "| jq '.choices[0].text' )"))
   )
 
   (cond ((get-buffer-window "AI"))
-        (t (split-window-right) (switch-to-buffer "AI"))
+	(t (split-window-right) (switch-to-buffer "AI"))
   )
   (with-current-buffer (get-buffer-create "AI") (end-of-buffer) (insert (concat prompt ":" response "
 "))))
 
-  
-		
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
