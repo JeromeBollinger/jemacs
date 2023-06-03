@@ -75,11 +75,11 @@
   :ensure t)
 
 (use-package helm
-  :config (helm-mode 1)
+  :bind 
   :bind (("M-x" . helm-M-x)
-  ;;("C-k" . helm-next-line)
-	 ;;	 ("C-l" . helm-previous-line)
-	 )
+	 (:map helm-map
+              ("C-k" . helm-next-line)
+              ("C-l" . helm-previous-line)))
   :ensure t)
 
 (use-package projectile
@@ -90,6 +90,25 @@
   :config (setq idle-highlight-visible-buffers t)
   :ensure t)
 
+(use-package spacemacs-theme
+  :config (load-theme 'spacemacs-dark t)
+  :ensure t)
+
+(use-package lsp-mode
+  :hook (lsp-mode . lsp-enable-which-key-integration)
+  :config((setq lsp-signature-auto-activate nil)
+	  (setq lsp-rust-server rust-analyzer))
+  :bind ("M-," . lsp-find-references)
+  :commands lsp
+  :ensure t)
+
+(use-package lsp-treemacs
+  :commands lsp-treemacs-errors-list
+  :ensure t)
+
+(use-package rust-mode
+  :ensure t)
+  
 
 ;; navigation
 (global-set-key (kbd "C-j") 'backward-char)
@@ -102,21 +121,85 @@
 (global-set-key (kbd "M-l") 'move-end-of-line)
 (global-set-key (kbd "M-ö") 'forward-word)
 
-(add-to-list 'default-frame-alist '(alpha-background . 90))
+(set-frame-parameter (selected-frame) 'alpha '(96 100))
 
 ;; Buffer management
 (global-set-key (kbd "ĸ") 'kill-this-buffer)
-(global-set-key (kbd "ł") (lambda () (interactive) (switch-to-buffer nil))
+(global-set-key (kbd "ł") (lambda () (interactive) (switch-to-buffer nil)))
+
+;; window management
+(global-set-key (kbd "C-(") 'split-window-right-and-focus)
+(global-set-key (kbd "C-)") 'split-window-below-and-focus)
+(global-set-key (kbd "ŧ") 'tab-new)
+
+;; hotkeys
+(global-set-key (kbd "←") 'undo)
+(global-set-key (kbd "«") 'undo-redo)
+(global-set-key (kbd "ħ") 'replace-string)
+(global-set-key (kbd "C-x C-r") 'rectangle-mark-mode)
+(global-set-key (kbd "C-x C-l") 'string-rectangle)
 
 
+;; my functions
+(defun jeb/e-init()
+  (interactive)
+  (find-file "~/.emacs.d/init.el"))
 
+(defun jeb/e-spacemacs()
+  (interactive)
+  (find-file "~/.emacs.d/custom/.spacemacs"))
+
+(defun jeb/e-zs()
+  (interactive)
+  (find-file "~/.zshrc"))
+
+(defun jeb/e-todo()
+  (interactive)
+  (find-file "~/gdrive/notes/Todo/TODO.md"))
+
+(defun jeb/d-home()
+  (interactive)
+  (dired "/home/jeb/"))
+
+(defun jeb/d-projects()
+  (interactive)
+  (dired "/home/jeb/Documents/projects"))
+
+(defun jeb/localhost (port &optional secure-answer)
+  (interactive "sPort: \nsSecure? (y/n)")
+  (setq my-secure nil)
+  (setq my-secure (cl-equalp secure-answer "y"))
+  (browse-url (concat"http" (if my-secure "s") "://localhost:" port)))
+
+(defun jeb/ask-openai (prompt)
+  "Establish a connection with OpenAI."
+  (interactive "sAsk OpenAI:")
+  (setq response (shell-command-to-string (concat "print $(curl https://api.openai.com/v1/completions \
+                 -H 'Content-Type: application/json' \
+                 -H 'Authorization: Bearer ' \
+                 -d '{
+                 \"model\": \"text-davinci-003\",
+                 \"prompt\": \"" prompt "\",
+                 \"max_tokens\": 500,
+                 \"temperature\": 0
+                 }' 2>/dev/null" "| jq '.choices[0].text' )"))
+  )
+
+  (cond ((get-buffer-window "AI"))
+        (t (split-window-right) (switch-to-buffer "AI"))
+  )
+  (with-current-buffer (get-buffer-create "AI") (end-of-buffer) (insert (concat prompt ":" response "
+"))))
+
+  
+		
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(idle-highlight-mode projectile helm which-key rainbow-delimiters vterm magit use-package popup async)))
+   '(rust-mode lsp-treemacs lsp-mode spacemacs-theme idle-highlight-mode projectile helm which-key rainbow-delimiters vterm magit use-package popup async)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
