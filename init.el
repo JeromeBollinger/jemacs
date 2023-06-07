@@ -112,6 +112,10 @@
   :config (load-theme 'spacemacs-dark t)
   :ensure t)
 
+(use-package dired-git-info
+  :config (add-hook 'dired-after-readin-hook 'dired-git-info-auto-enable)
+  :ensure t)
+
 
 ;; navigation
 (global-set-key (kbd "C-j") 'backward-char)
@@ -209,7 +213,113 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(rust-mode lsp-treemacs lsp-mode spacemacs-theme idle-highlight-mode projectile helm which-key rainbow-delimiters vterm magit use-package popup async)))
+   '(git-info rust-mode lsp-treemacs lsp-mode spacemacs-theme idle-highlight-mode projectile helm which-key rainbow-delimiters vterm magit use-package popup async)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+
+
+;; navigation
+(global-set-key (kbd "C-j") 'backward-char)
+(global-set-key (kbd "C-k") 'next-line)
+(global-set-key (kbd "C-l") 'previous-line)
+(global-set-key (kbd "C-ö") 'forward-char)
+
+(global-set-key (kbd "M-j") 'backward-word)
+(global-set-key (kbd "M-k") 'move-beginning-of-line)
+(global-set-key (kbd "M-l") 'move-end-of-line)
+(global-set-key (kbd "M-ö") 'forward-word)
+
+(global-set-key (kbd "C-i") 'recenter-top-bottom)
+
+;; Buffer management
+(global-set-key (kbd "ĸ") 'kill-this-buffer)
+(global-set-key (kbd "ł") (lambda () (interactive) (switch-to-buffer nil)))
+
+;; window management
+(global-set-key (kbd "C-(") '(lambda () (interactive) (split-window-right) (other-window 1)))
+(global-set-key (kbd "C-)") '(lambda () (interactive) (split-window-below) (other-window 1)))
+(global-set-key (kbd "ð") 'delete-window)
+(global-set-key (kbd "C-)") 'split-window-below-and-focus)
+(global-set-key (kbd "ŧ") 'tab-new)
+(global-set-key (kbd "¢") 'tab-close)
+
+;; hotkeys
+(global-set-key (kbd "←") 'undo)
+(global-set-key (kbd "«") 'undo-redo)
+(global-set-key (kbd "ħ") 'replace-string)
+(global-set-key (kbd "C-x C-r") 'rectangle-mark-mode)
+(global-set-key (kbd "C-x C-l") 'string-rectangle)
+(global-set-key (kbd "ſ") 'whitespace-cleanup)
+;; (global-set-key (kbd "M-p") 'drag-stuff-up)
+;; (global-set-key (kbd "M-n") 'drag-stuff-down)
+
+
+
+;; my functions
+(defun jeb/e-init()
+  (interactive)
+  (find-file "~/.emacs.d/init.el"))
+
+(defun jeb/e-spacemacs()
+  (interactive)
+  (find-file "~/.emacs.d/custom/.spacemacs"))
+
+(defun jeb/e-zs()
+  (interactive)
+  (find-file "~/.zshrc"))
+
+(defun jeb/e-todo()
+  (interactive)
+  (find-file "~/gdrive/notes/Todo/TODO.md"))
+
+(defun jeb/d-home()
+  (interactive)
+  (dired "/home/jeb/"))
+
+(defun jeb/d-projects()
+  (interactive)
+  (dired "/home/jeb/Documents/projects"))
+
+(defun jeb/localhost (port &optional secure-answer)
+  (interactive "sPort: \nsSecure? (y/n)")
+  (setq my-secure nil)
+  (setq my-secure (cl-equalp secure-answer "y"))
+  (browse-url (concat"http" (if my-secure "s") "://localhost:" port)))
+
+(defun jeb/ask-openai (prompt)
+  "Establish a connection with OpenAI."
+  (interactive "sAsk OpenAI:")
+  (setq response (shell-command-to-string (concat "print $(curl https://api.openai.com/v1/completions \
+		 -H 'Content-Type: application/json' \
+		 -H 'Authorization: Bearer ' \
+		 -d '{
+		 \"model\": \"text-davinci-003\",
+		 \"prompt\": \"" prompt "\",
+		 \"max_tokens\": 500,
+		 \"temperature\": 0
+		 }' 2>/dev/null" "| jq '.choices[0].text' )"))
+  )
+
+  (cond ((get-buffer-window "AI"))
+	(t (split-window-right) (switch-to-buffer "AI"))
+  )
+  (with-current-buffer (get-buffer-create "AI") (end-of-buffer) (insert (concat prompt ":" response "
+"))))
+
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(dired-git-info git-info rust-mode lsp-treemacs lsp-mode spacemacs-theme idle-highlight-mode projectile helm which-key rainbow-delimiters vterm magit use-package popup async)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
