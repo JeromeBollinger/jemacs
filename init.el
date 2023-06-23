@@ -62,6 +62,7 @@
   :bind (("ß" . new_vterm)
 	 ("æ" . vterm-copy-mode))
   :hook (vterm-mode . (lambda () (text-scale-decrease 2)))
+  :config (setq vterm-shell "/usr/bin/zsh")
   :ensure t)
 
 (use-package rainbow-delimiters
@@ -213,7 +214,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(git-info rust-mode lsp-treemacs lsp-mode spacemacs-theme idle-highlight-mode projectile helm which-key rainbow-delimiters vterm magit use-package popup async)))
+   '(dired-git-info git-info rust-mode lsp-treemacs lsp-mode spacemacs-theme idle-highlight-mode projectile helm which-key rainbow-delimiters vterm magit use-package popup async))
+ '(projectile-globally-ignored-directories
+   '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "target")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -313,16 +316,5 @@
 
 
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(dired-git-info git-info rust-mode lsp-treemacs lsp-mode spacemacs-theme idle-highlight-mode projectile helm which-key rainbow-delimiters vterm magit use-package popup async)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+
