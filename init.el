@@ -76,11 +76,11 @@
   :ensure t)
 
 (use-package helm
-  :bind
   :bind (("M-x" . helm-M-x)
 	 (:map helm-map
 	      ("C-k" . helm-next-line)
 	      ("C-l" . helm-previous-line)))
+  :config (helm-mode 1)
   :ensure t)
 
 (use-package projectile
