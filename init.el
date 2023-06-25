@@ -117,6 +117,8 @@
   :config (add-hook 'dired-after-readin-hook 'dired-git-info-auto-enable)
   :ensure t)
 
+(use-package justl
+  :ensure t)
 
 ;; navigation
 (global-set-key (kbd "C-j") 'backward-char)
