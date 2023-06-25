@@ -136,6 +136,7 @@
 ;; Buffer management
 (global-set-key (kbd "ĸ") 'kill-this-buffer)
 (global-set-key (kbd "ł") (lambda () (interactive) (switch-to-buffer nil)))
+(setq backup-directory-alist `(("." . "~/.saves")))
 
 ;; window management
 (global-set-key (kbd "C-(") '(lambda () (interactive) (split-window-right) (other-window 1)))
