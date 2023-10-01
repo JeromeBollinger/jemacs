@@ -94,9 +94,13 @@
 (use-package lsp-mode
   :hook (lsp-mode . lsp-enable-which-key-integration)
   :config((setq lsp-signature-auto-activate nil)
-	  (setq lsp-rust-server rust-analyzer))
+	  (setq lsp-rust-server 'rust-analyzer))
   :bind ("M-," . lsp-find-references)
   :commands lsp
+  :ensure t)
+
+(use-package helm-lsp
+  :commands helm-lsp-workspace-symbol
   :ensure t)
 
 (use-package lsp-treemacs
@@ -155,7 +159,7 @@
 (global-set-key (kbd "ſ") 'whitespace-cleanup)
 ;; (global-set-key (kbd "M-p") 'drag-stuff-up)
 ;; (global-set-key (kbd "M-n") 'drag-stuff-down)
-
+(global-set-key (kbd "TAB") 'self-insert-command)
 
 
 ;; my functions
@@ -217,7 +221,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(dired-git-info git-info rust-mode lsp-treemacs lsp-mode spacemacs-theme idle-highlight-mode projectile helm which-key rainbow-delimiters vterm magit use-package popup async))
+   '(helm-lsp justl dired-git-info git-info rust-mode lsp-treemacs lsp-mode spacemacs-theme idle-highlight-mode projectile helm which-key rainbow-delimiters vterm magit use-package popup async))
  '(projectile-globally-ignored-directories
    '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "target")))
 (custom-set-faces
