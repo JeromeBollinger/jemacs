@@ -231,45 +231,6 @@
  ;; If there is more than one, they won't work right.
  )
 
-
-
-;; navigation
-(global-set-key (kbd "C-j") 'backward-char)
-(global-set-key (kbd "C-k") 'next-line)
-(global-set-key (kbd "C-l") 'previous-line)
-(global-set-key (kbd "C-ö") 'forward-char)
-
-(global-set-key (kbd "M-j") 'backward-word)
-(global-set-key (kbd "M-k") 'move-beginning-of-line)
-(global-set-key (kbd "M-l") 'move-end-of-line)
-(global-set-key (kbd "M-ö") 'forward-word)
-
-(global-set-key (kbd "C-i") 'recenter-top-bottom)
-
-;; Buffer management
-(global-set-key (kbd "ĸ") 'kill-this-buffer)
-(global-set-key (kbd "ł") (lambda () (interactive) (switch-to-buffer nil)))
-
-;; window management
-(global-set-key (kbd "C-(") '(lambda () (interactive) (split-window-right) (other-window 1)))
-(global-set-key (kbd "C-)") '(lambda () (interactive) (split-window-below) (other-window 1)))
-(global-set-key (kbd "ð") 'delete-window)
-(global-set-key (kbd "C-)") 'split-window-below-and-focus)
-(global-set-key (kbd "ŧ") 'tab-new)
-(global-set-key (kbd "¢") 'tab-close)
-
-;; hotkeys
-(global-set-key (kbd "←") 'undo)
-(global-set-key (kbd "«") 'undo-redo)
-(global-set-key (kbd "ħ") 'replace-string)
-(global-set-key (kbd "C-x C-r") 'rectangle-mark-mode)
-(global-set-key (kbd "C-x C-l") 'string-rectangle)
-(global-set-key (kbd "ſ") 'whitespace-cleanup)
-;; (global-set-key (kbd "M-p") 'drag-stuff-up)
-;; (global-set-key (kbd "M-n") 'drag-stuff-down)
-
-
-
 ;; my functions
 (defun jeb/e-init()
   (interactive)
