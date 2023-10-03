@@ -124,6 +124,9 @@
 (use-package justl
   :ensure t)
 
+(setq initial-buffer-choice 'vterm)
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
 ;; navigation
 (global-set-key (kbd "C-j") 'backward-char)
 (global-set-key (kbd "C-k") 'next-line)
