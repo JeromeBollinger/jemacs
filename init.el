@@ -127,6 +127,8 @@
 (setq initial-buffer-choice 'vterm)
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
+;; dired
+(add-hook 'dired-mode-hook (lambda () (local-set-key (kbd "j") 'helm-find-files)))
 ;; navigation
 (global-set-key (kbd "C-j") 'backward-char)
 (global-set-key (kbd "C-k") 'next-line)
