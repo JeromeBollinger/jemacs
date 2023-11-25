@@ -129,6 +129,8 @@
 
 ;; dired
 (add-hook 'dired-mode-hook (lambda () (local-set-key (kbd "j") 'helm-find-files)))
+(global-set-key (kbd "C-x C-j") 'dired-jump)
+
 ;; navigation
 (global-set-key (kbd "C-j") 'backward-char)
 (global-set-key (kbd "C-k") 'next-line)
