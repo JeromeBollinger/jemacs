@@ -131,6 +131,9 @@
 (add-hook 'dired-mode-hook (lambda () (local-set-key (kbd "j") 'helm-find-files)))
 (global-set-key (kbd "C-x C-j") 'dired-jump)
 
+;; QOL
+(fset 'yes-or-no-p 'y-or-n-p)  ;; Ask for y/n instead of yes/no
+
 ;; navigation
 (global-set-key (kbd "C-j") 'backward-char)
 (global-set-key (kbd "C-k") 'next-line)
