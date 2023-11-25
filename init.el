@@ -124,6 +124,11 @@
 (use-package justl
   :ensure t)
 
+(use-package yaml-mode
+  :ensure t)
+
+(add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-mode))
+
 (setq initial-buffer-choice 'vterm)
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
