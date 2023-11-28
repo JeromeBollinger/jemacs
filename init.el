@@ -80,9 +80,10 @@
 	 (:map helm-map
 	      ("C-k" . helm-next-line)
 	      ("C-l" . helm-previous-line)))
-  :config ((setq helm-mode 1)
-	   (setq helm-move-to-line-cycle-in-source nil))
+  :config (helm-mode 1)
   :ensure t)
+
+(setq helm-move-to-line-cycle-in-source nil)
 
 (use-package projectile
   :ensure t)
