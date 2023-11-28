@@ -77,13 +77,14 @@
 
 (use-package helm
   :bind (("M-x" . helm-M-x)
-	 (:map helm-map
-	      ("C-k" . helm-next-line)
-	      ("C-l" . helm-previous-line)))
+  (:map helm-map
+      ("C-k" . helm-next-line)
+      ("C-l" . helm-previous-line)))
   :config (helm-mode 1)
+  (setq helm-move-to-line-cycle-in-source nil)
   :ensure t)
 
-(setq helm-move-to-line-cycle-in-source nil)
+
 
 (use-package projectile
   :ensure t)
@@ -91,6 +92,7 @@
 (use-package idle-highlight-mode
   :hook (prog-mode . idle-highlight-mode)
   :config (setq idle-highlight-visible-buffers t)
+  (setq idle-highlight-global-mode t)
   :ensure t)
 
 (use-package lsp-mode
