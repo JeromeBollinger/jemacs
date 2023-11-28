@@ -131,6 +131,24 @@
   :config (add-hook 'dired-after-readin-hook 'dired-git-info-auto-enable)
   :ensure t)
 
+(use-package corfu
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-separator ?\s)
+  (corfu-quit-at-boundary t)
+  (corfu-quit-no-match t)
+  (corfu-preselect 'directory)
+  (corfu-on-exact-match nil)
+  (corfu-scroll-margin 5)
+  (completion-styles '(basic))
+  :bind
+  (:map corfu-map
+        ("RET" . nil))
+  :init
+  (global-corfu-mode)
+  :ensure t)
+
 (use-package justl
   :ensure t)
 
