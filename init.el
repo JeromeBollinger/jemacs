@@ -185,6 +185,7 @@
 ;; (global-set-key (kbd "M-p") 'drag-stuff-up)
 ;; (global-set-key (kbd "M-n") 'drag-stuff-down)
 (global-set-key (kbd "TAB") 'self-insert-command)
+(add-hook 'prog-mode-hook (lambda () (local-set-key (kbd "TAB") 'indent-for-tab-command)))
 
 
 ;; my functions
