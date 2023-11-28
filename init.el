@@ -203,7 +203,11 @@
 ;; (global-set-key (kbd "M-p") 'drag-stuff-up)
 ;; (global-set-key (kbd "M-n") 'drag-stuff-down)
 (global-set-key (kbd "TAB") 'self-insert-command)
+
+;; indentation and tabs
 (add-hook 'prog-mode-hook (lambda () (local-set-key (kbd "TAB") 'indent-for-tab-command)))
+(setq-default indent-tabs-mode nil)
+
 
 
 ;; my functions
