@@ -162,7 +162,6 @@
 (global-set-key (kbd "C-(") (lambda () (interactive) (split-window-right) (other-window 1)))
 (global-set-key (kbd "C-)") (lambda () (interactive) (split-window-below) (other-window 1)))
 (global-set-key (kbd "ð") 'delete-window)
-(global-set-key (kbd "C-)") 'split-window-below-and-focus)
 (global-set-key (kbd "ŧ") 'tab-new)
 (global-set-key (kbd "¢") 'tab-close)
 
