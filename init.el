@@ -92,6 +92,7 @@
 (use-package idle-highlight-mode
   :hook (prog-mode . idle-highlight-mode)
   :config (setq idle-highlight-visible-buffers t)
+  (setq idle-highlight-exceptions-face '(font-lock-keyword-face))
   (setq idle-highlight-global-mode t)
   :ensure t)
 
