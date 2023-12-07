@@ -209,6 +209,7 @@
 
 (define-key input-decode-map "\C-i" [C-i])
 (global-set-key (kbd "<C-i>") 'recenter-top-bottom)
+(global-set-key (kbd "C-d") 'delete-forward-char)
 
 ;; Buffer management
 (global-set-key (kbd "ĸ") 'kill-this-buffer)
