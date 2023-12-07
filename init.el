@@ -79,6 +79,8 @@
   :bind (("M-x" . helm-M-x)
   (:map helm-map
       ("C-k" . helm-next-line)
+      ("C-l" . helm-previous-line)
+      :map helm-find-files-map
       ("C-l" . helm-previous-line)))
   :config (helm-mode 1)
   (setq helm-move-to-line-cycle-in-source nil)
