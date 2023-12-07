@@ -81,7 +81,11 @@
       ("C-k" . helm-next-line)
       ("C-l" . helm-previous-line)
       :map helm-find-files-map
-      ("C-l" . helm-previous-line)))
+      ("C-l" . helm-previous-line)
+      ("<tab>" . helm-execute-persistent-action)
+      ("C-j" . helm-find-files-up-one-level)
+      ("C-ö" . helm-execute-persistent-action)
+      ("t" . self-insert-command)))
   :config (helm-mode 1)
   (setq helm-move-to-line-cycle-in-source nil)
   :ensure t)
