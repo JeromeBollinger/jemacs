@@ -51,19 +51,18 @@
   :bind ("ŋ" . magit)
   :ensure t)
 
+(use-package vterm
+  :bind (("ß" . new_vterm)
+	 ("æ" . vterm-copy-mode))
+  :hook ((vterm-mode . (lambda () (text-scale-decrease 2)))
+  (vterm-mode . (lambda () (setq show-trailing-whitespace nil))))
+  :config (setq vterm-shell "/usr/bin/zsh")
+  :ensure t)
+
 (defun new_vterm ()
   (interactive)
   (vterm 'N)
  )
-
-
-(add-hook 'vterm-mode-hook (lambda () (text-scale-decrease 2)))
-(use-package vterm
-  :bind (("ß" . new_vterm)
-	 ("æ" . vterm-copy-mode))
-  :hook (vterm-mode . (lambda () (text-scale-decrease 2)))
-  :config (setq vterm-shell "/usr/bin/zsh")
-  :ensure t)
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode)
@@ -91,12 +90,12 @@
   :ensure t)
 
 
-
 (use-package projectile
   :ensure t)
 
 (use-package idle-highlight-mode
   :hook (prog-mode . idle-highlight-mode)
+  (yaml-mode . idle-highlight-mode)
   :config (setq idle-highlight-visible-buffers t)
   (setq idle-highlight-exceptions-face '(font-lock-keyword-face))
   (setq idle-highlight-global-mode t)
