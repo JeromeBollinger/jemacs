@@ -108,6 +108,7 @@
   :bind ("M-," . lsp-find-references)
   :commands lsp
   :ensure t)
+(setq lsp-ansible-add-on? t)
 
 (use-package helm-lsp
   :commands helm-lsp-workspace-symbol
@@ -237,6 +238,7 @@
 
 ;; indentation and tabs
 (add-hook 'prog-mode-hook (lambda () (local-set-key (kbd "TAB") 'indent-for-tab-command)))
+(add-hook 'yaml-mode-hook (lambda () (local-set-key (kbd "TAB") 'indent-for-tab-command)))
 (setq-default indent-tabs-mode nil)
 (setq-default show-trailing-whitespace t)
 
