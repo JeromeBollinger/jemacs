@@ -133,6 +133,13 @@
   :config (load-theme 'spacemacs-dark t)
   :ensure t)
 
+(use-package undo-fu
+  :config
+  (global-unset-key (kbd "C-z"))
+  :bind
+  ("«" . undo-fu-only-redo)
+  :ensure t)
+
 (use-package dired-git-info
   :config (add-hook 'dired-after-readin-hook 'dired-git-info-auto-enable)
   :ensure t)
