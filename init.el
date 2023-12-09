@@ -185,6 +185,17 @@
   (require 'org-roam-protocol)
   :ensure t)
 
+(setq tramp-default-method "ssh")
+
+(defun jeb/ssh-tramp (arg)
+  "Easier ssh tramp access by reading ssh config"
+  (interactive
+   (list
+    (completing-read "Select host: "
+                     (list (shell-command-to-string "cat ~/.ssh/config | grep Host\ | cut -d ' ' -f 2")))))
+  (find-file (concat "/ssh:" arg ":~/" ))
+)
+
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-mode))
 
 (setq initial-buffer-choice 'vterm)
