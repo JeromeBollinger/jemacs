@@ -194,6 +194,15 @@
     (completing-read "Select host: "
                      (list (shell-command-to-string "cat ~/.ssh/config | grep Host\ | cut -d ' ' -f 2")))))
   (find-file (concat "/ssh:" arg ":~/" ))
+  )
+
+(defun jeb/docker-tramp (arg)
+  "Easier ssh tramp access by reading ssh config"
+  (interactive
+   (list
+    (completing-read "Select container: "
+                     (list (shell-command-to-string "docker ps --format '{{.Names}}'")))))
+  (find-file (concat "/docker:root@" arg ":~/" ))
 )
 
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-mode))
