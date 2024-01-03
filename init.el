@@ -169,6 +169,7 @@
 (use-package yaml-mode
   :ensure t)
 
+(require 'org-roam-protocol)
 (use-package org-roam
   :custom
   (org-roam-directory (file-truename "~/projects/roam/"))
@@ -182,7 +183,6 @@
                ("C-l" . previous-line)))
   :config
   (org-roam-db-autosync-mode)
-  (require 'org-roam-protocol)
   :ensure t)
 
 (setq tramp-default-method "ssh")
