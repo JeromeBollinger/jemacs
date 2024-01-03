@@ -183,6 +183,7 @@
                ("C-l" . previous-line)))
   :config
   (org-roam-db-autosync-mode)
+  :hook (helm-mode-org-roam-node-find . (lambda () (setq show-trailing-whitespace nil)))
   :ensure t)
 
 (setq tramp-default-method "ssh")
@@ -250,18 +251,20 @@
 (global-set-key (kbd "ħ") 'replace-string)
 (global-set-key (kbd "C-x C-r") 'rectangle-mark-mode)
 (global-set-key (kbd "C-x C-l") 'string-rectangle)
-(global-set-key (kbd "ſ") 'whitespace-cleanup)
+(global-set-key (kbd "»") 'whitespace-cleanup)
 ;; (global-set-key (kbd "M-p") 'drag-stuff-up)
 ;; (global-set-key (kbd "M-n") 'drag-stuff-down)
 (global-set-key (kbd "TAB") 'self-insert-command)
 (electric-pair-mode t)
+(global-set-key (kbd "C-d") 'delete-forward-char)
 
 ;; indentation and tabs
+(add-hook 'yaml-mode-hook (lambda () (local-set-key (kbd "TAB") 'indent-for-tab-command)))
 (add-hook 'prog-mode-hook (lambda () (local-set-key (kbd "TAB") 'indent-for-tab-command)))
 (add-hook 'yaml-mode-hook (lambda () (local-set-key (kbd "TAB") 'indent-for-tab-command)))
+(add-hook 'lsp-mode-hook (lambda () (local-set-key (kbd "TAB") 'indent-for-tab-command)))
 (setq-default indent-tabs-mode nil)
 (setq-default show-trailing-whitespace t)
-
 
 ;; my functions
 (defun jeb/e-init()
