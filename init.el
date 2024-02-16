@@ -83,6 +83,7 @@
       ("<tab>" . helm-execute-persistent-action)
       ("C-j" . helm-find-files-up-one-level)
       ("C-ö" . helm-execute-persistent-action)
+      ("C-;" . helm-execute-persistent-action)
       ("t" . self-insert-command)))
   :config (helm-mode 1)
   (setq helm-move-to-line-cycle-in-source nil)
