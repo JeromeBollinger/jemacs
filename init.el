@@ -222,6 +222,8 @@
 ;; QOL
 (fset 'yes-or-no-p 'y-or-n-p)  ;; Ask for y/n instead of yes/no
 
+(set-face-attribute 'default nil :height 120)
+
 ;; navigation
 (global-set-key (kbd "C-j") 'backward-char)
 (global-set-key (kbd "C-k") 'next-line)
