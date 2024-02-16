@@ -54,8 +54,7 @@
 (use-package vterm
   :bind (("ß" . new_vterm)
 	 ("æ" . vterm-copy-mode))
-  :hook ((vterm-mode . (lambda () (text-scale-decrease 2)))
-  (vterm-mode . (lambda () (setq show-trailing-whitespace nil))))
+  :hook (vterm-mode . (lambda () (setq show-trailing-whitespace nil)))
   :config (setq vterm-shell "/usr/bin/zsh")
   :ensure t)
 
