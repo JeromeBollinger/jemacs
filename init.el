@@ -186,6 +186,10 @@
   :hook (helm-mode-org-roam-node-find . (lambda () (setq show-trailing-whitespace nil)))
   :ensure t)
 
+(use-package org-modern
+  :hook (org-mode . org-modern-mode)
+  :ensure t)
+
 (setq tramp-default-method "ssh")
 
 (defun jeb/ssh-tramp (arg)
