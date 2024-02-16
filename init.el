@@ -229,6 +229,7 @@
 (global-set-key (kbd "C-k") 'next-line)
 (global-set-key (kbd "C-l") 'previous-line)
 (global-set-key (kbd "C-ö") 'forward-char)
+(global-set-key (kbd "C-;") 'forward-char)
 
 (global-set-key (kbd "M-j") 'backward-word)
 (global-set-key (kbd "M-k") 'move-beginning-of-line)
