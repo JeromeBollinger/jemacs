@@ -128,8 +128,8 @@
   (setq highlight-indent-guides-auto-character-face-perc 80)
   :ensure t)
 
-;; theme
-(set-frame-parameter (selected-frame) 'alpha '(96 100))
+;; frame options
+(add-to-list 'default-frame-alist '(alpha-background . 96))
 
 (use-package spacemacs-theme
   :config (load-theme 'spacemacs-dark t)
@@ -214,7 +214,7 @@
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-mode))
 
 (setq initial-buffer-choice 'vterm)
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; dired
 (add-hook 'dired-mode-hook (lambda () (local-set-key (kbd "j") 'helm-find-files)))
