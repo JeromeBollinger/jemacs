@@ -4,7 +4,6 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(global-display-line-numbers-mode 1)
 
 (setq history-length 25)
 (savehist-mode 1)
@@ -217,6 +216,7 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; dired
+(add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode -1)))
 (add-hook 'dired-mode-hook (lambda () (local-set-key (kbd "j") 'helm-find-files)))
 (global-set-key (kbd "C-x C-j") 'dired-jump)
 
