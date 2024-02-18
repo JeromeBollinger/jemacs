@@ -53,7 +53,17 @@
 
 (use-package vterm
   :bind (("ß" . new_vterm)
-	 ("æ" . vterm-copy-mode))
+	 ("æ" . vterm-copy-mode)
+         :map vterm-mode-map
+         ("C-j" . vterm-send-C-b)
+         ("C-k" . vterm-send-C-n)
+         ("C-l" . vterm-send-C-p)
+         ("C-ö" . vterm-send-C-f)
+         ("M-j" . vterm-send-M-b)
+         ("M-k" . vterm-send-C-a)
+         ("M-l" . vterm-send-C-e)
+         ("M-ö" . vterm-send-M-f)
+         )
   :hook (vterm-mode . (lambda () (setq show-trailing-whitespace nil)))
   :config (setq vterm-shell "/usr/bin/zsh")
   :ensure t)
