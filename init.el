@@ -179,6 +179,14 @@
 (use-package yaml-mode
   :ensure t)
 
+
+;; Run sudo pamac install dotnet-sdk
+;; Clone git@github.com:christiaan-janssen/bicep-mode.git
+;; follow instructions
+;; run lsp server
+(use-package "bicep-mode"
+  :load-path "~/Documents/bicep-mode")
+
 (require 'org-roam-protocol)
 (use-package org-roam
   :custom
