@@ -184,7 +184,12 @@
 ;; Clone git@github.com:christiaan-janssen/bicep-mode.git
 ;; follow instructions
 ;; run lsp server
-(use-package "bicep-mode"
+(use-package bicep-mode
+  :mode ("\\.bicep\\'"
+         "\\.bicepparam\\'")
+  :hook (bicep-mode . lsp-deferred)
+  :bind (:map bicep-mode-map
+         ("C-j" . backward-char))
   :load-path "~/Documents/bicep-mode")
 
 (require 'org-roam-protocol)
