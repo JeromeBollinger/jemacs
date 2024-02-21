@@ -113,11 +113,15 @@
 
 (use-package lsp-mode
   :hook (lsp-mode . lsp-enable-which-key-integration)
-  :config((setq lsp-signature-auto-activate nil)
-	  (setq lsp-rust-server 'rust-analyzer))
+  :config(setq lsp-signature-auto-activate nil)
+  (setq lsp-rust-server 'rust-analyzer)
   :bind ("M-," . lsp-find-references)
   :commands lsp
   :ensure t)
+
+(use-package lsp-ui
+  :ensure t)
+
 (setq lsp-ansible-add-on? t)
 
 (use-package helm-lsp
@@ -173,6 +177,26 @@
   (global-corfu-mode)
   :ensure t)
 
+(use-package cape
+  :init
+  ;; Add to the global default value of `completion-at-point-functions' which is
+  ;; used by `completion-at-point'.  The order of the functions matters, the
+  ;; first function returning a result wins.  Note that the list of buffer-local
+  ;; completion functions takes precedence over the global list.
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+  ;;(add-to-list 'completion-at-point-functions #'cape-history)
+  ;;(add-to-list 'completion-at-point-functions #'cape-keyword)
+  ;;(add-to-list 'completion-at-point-functions #'cape-tex)
+  ;;(add-to-list 'completion-at-point-functions #'cape-sgml)
+  ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345)
+  ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
+  ;;(add-to-list 'completion-at-point-functions #'cape-dict)
+  ;;(add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
+  ;;(add-to-list 'completion-at-point-functions #'cape-line)
+  :ensure t)
+
 (use-package justl
   :ensure t)
 
@@ -180,6 +204,9 @@
   :ensure t)
 
 (use-package neotree
+  :ensure t)
+
+(use-package all-the-icons
   :ensure t)
 
 ;; NeoTree can be opened (toggled) at projectile project root
@@ -198,6 +225,7 @@
 
 ;; need another one for python stuff, since this gets re-bound
 (global-set-key (kbd "C-b") 'neotree-project-dir)
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
 ;; Run sudo pamac install dotnet-sdk
 ;; Clone git@github.com:christiaan-janssen/bicep-mode.git
@@ -211,7 +239,6 @@
          ("C-j" . backward-char))
   :load-path "~/Documents/bicep-mode")
 
-(require 'org-roam-protocol)
 (use-package org-roam
   :custom
   (org-roam-directory (file-truename "~/projects/roam/"))
