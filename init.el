@@ -294,6 +294,9 @@
 
 (set-face-attribute 'default nil :height 120)
 
+;; Ediff
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
 ;; navigation
 (global-set-key (kbd "C-j") 'backward-char)
 (global-set-key (kbd "C-k") 'next-line)
