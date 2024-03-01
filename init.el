@@ -309,9 +309,7 @@
 (global-set-key (kbd "M-l") 'move-end-of-line)
 (global-set-key (kbd "M-ö") 'forward-word)
 
-(defun jeb/ci (_)
-  (define-key input-decode-map [?\C-i] [C-i])
-  )
+(define-key input-decode-map "\C-i" [C-i])
 
 (add-to-list 'after-make-frame-functions 'jeb/ci)
 (global-set-key (kbd "<C-i>") 'recenter-top-bottom)
