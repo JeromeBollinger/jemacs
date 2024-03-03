@@ -259,6 +259,9 @@
   :hook (org-mode . org-modern-mode)
   :ensure t)
 
+(use-package yasnippet
+  :ensure t)
+
 (setq tramp-default-method "ssh")
 
 (defun jeb/ssh-tramp (arg)
