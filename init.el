@@ -375,7 +375,7 @@
 
 (defun jeb/d-projects()
   (interactive)
-  (dired "/home/jeb/Documents/projects"))
+  (dired "/home/jeb/projects"))
 
 (defun jeb/localhost (port &optional secure-answer)
   (interactive "sPort: \nsSecure? (y/n)")
