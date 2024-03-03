@@ -112,7 +112,8 @@
   :ensure t)
 
 (use-package lsp-mode
-  :hook (lsp-mode . lsp-enable-which-key-integration)
+  :hook ((rust-mode . lsp)
+         (lsp-mode . lsp-enable-which-key-integration))
   :config(setq lsp-signature-auto-activate nil)
   (setq lsp-rust-server 'rust-analyzer)
   :bind ("M-," . lsp-find-references)
@@ -260,6 +261,10 @@
   :ensure t)
 
 (use-package yasnippet
+  :ensure t)
+
+(use-package flycheck
+  :hook (lsp-mode . flycheck-mode)
   :ensure t)
 
 (setq tramp-default-method "ssh")
