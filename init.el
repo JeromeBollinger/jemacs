@@ -332,6 +332,7 @@
 ;; Buffer management
 (global-set-key (kbd "ĸ") 'kill-this-buffer)
 (global-set-key (kbd "ł") (lambda () (interactive) (switch-to-buffer nil)))
+(setq auto-save-timeout 1)
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq make-backup-files nil)
 
