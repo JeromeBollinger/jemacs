@@ -320,6 +320,8 @@
 (global-set-key (kbd "M-k") 'move-beginning-of-line)
 (global-set-key (kbd "M-l") 'move-end-of-line)
 (global-set-key (kbd "M-ö") 'forward-word)
+(global-set-key (kbd "C-ä") 'delete-backward-char)
+(global-set-key (kbd "M-ä") 'backward-kill-word)
 
 (define-key input-decode-map "\C-i" [C-i])
 
