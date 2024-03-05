@@ -342,7 +342,7 @@
 
 ;; hotkeys
 (global-set-key (kbd "←") 'undo)
-(global-set-key (kbd "«") 'undo-redo)
+(global-set-key (kbd "«") 'undo-fu-only-redo)
 (global-set-key (kbd "ħ") 'replace-string)
 (global-set-key (kbd "C-x C-r") 'rectangle-mark-mode)
 (global-set-key (kbd "C-x C-l") 'string-rectangle)
