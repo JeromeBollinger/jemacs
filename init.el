@@ -291,6 +291,7 @@
 
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-mode))
 
+(delete-selection-mode t)
 (setq initial-buffer-choice 'vterm)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
