@@ -392,6 +392,10 @@
   (interactive)
   (dired "/home/jeb/projects"))
 
+(defun jeb/write-date()
+  (interactive)
+  (insert (shell-command-to-string "date +\"%Y %M %d\"")))
+
 (defun jeb/localhost (port &optional secure-answer)
   (interactive "sPort: \nsSecure? (y/n)")
   (setq my-secure nil)
