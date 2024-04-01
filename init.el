@@ -123,6 +123,13 @@
   :ensure t)
 
 (use-package lsp-ui
+  :config(setq lsp-ui-doc-show-with-cursor t)
+  :ensure t)
+
+(use-package drag-stuff
+  :config(setq drag-stuff-global-mode t)
+  :bind(("M-p" . drag-stuff-up)
+         ("M-n" . drag-stuff-down))
   :ensure t)
 
 (setq lsp-ansible-add-on? t)
