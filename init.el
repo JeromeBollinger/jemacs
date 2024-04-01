@@ -320,6 +320,7 @@
 (setq-default fill-column 120)
 (add-hook 'markdown-mode-hook #'auto-fill-mode)
 
+(delete-selection-mode 1)
 ;; navigation
 (global-set-key (kbd "C-j") 'backward-char)
 (global-set-key (kbd "C-k") 'next-line)
