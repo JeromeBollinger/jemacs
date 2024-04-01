@@ -321,6 +321,20 @@
 (add-hook 'markdown-mode-hook #'auto-fill-mode)
 
 (delete-selection-mode 1)
+
+(add-hook 'js-json-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq tab-width 2)
+            (setq js-indent-level 2)))
+
+(setq css-indent-offset 2)
+
+(setq exec-path (append exec-path '("~/.nvm/versions/node/v21.7.1/bin")))
+(executable-find "npm")
+
+(exec-path-from-shell-initialize)
+
 ;; navigation
 (global-set-key (kbd "C-j") 'backward-char)
 (global-set-key (kbd "C-k") 'next-line)
