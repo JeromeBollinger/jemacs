@@ -180,6 +180,7 @@
   (corfu-on-exact-match nil)
   (corfu-scroll-margin 5)
   (completion-styles '(basic))
+  (corfu-auto-prefix 1)
   :bind
   (:map corfu-map
         ("RET" . nil))
