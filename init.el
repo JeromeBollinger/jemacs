@@ -273,6 +273,7 @@
   :ensure t)
 
 (use-package yasnippet
+  :init (yas-global-mode)
   :ensure t)
 
 (use-package flycheck
