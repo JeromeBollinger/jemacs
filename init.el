@@ -184,11 +184,7 @@
   :bind
   (:map corfu-map
         ("RET" . nil))
-  :init
-  (global-corfu-mode)
-  :ensure t)
-
-(use-package cape
+  :init (use-package cape
   :init
   ;; Add to the global default value of `completion-at-point-functions' which is
   ;; used by `completion-at-point'.  The order of the functions matters, the
