@@ -218,6 +218,12 @@
   :ensure t)
 
 (use-package all-the-icons
+  :if (display-graphic-p)
+  :ensure t)
+(use-package all-the-icons-dired
+  :hook (dired-mode . all-the-icons-dired-mode)
+  :ensure t)
+(use-package all-the-icons-nerd-fonts
   :ensure t)
 
 ;; NeoTree can be opened (toggled) at projectile project root
