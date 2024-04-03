@@ -422,7 +422,7 @@
 
 (defun jeb/write-date()
   (interactive)
-  (insert (shell-command-to-string "date +\"%Y %M %d\"")))
+  (insert (shell-command-to-string "date +\"%Y %m %d\"")))
 
 (defun jeb/localhost (port &optional secure-answer)
   (interactive "sPort: \nsSecure? (y/n)")
