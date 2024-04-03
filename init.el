@@ -260,6 +260,7 @@
          ("C-c n g" . org-roam-graph)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n c" . org-roam-capture)
+         ("C-c n o" . org-open-at-point)
          (:map org-mode-map
                ("C-j" . backward-char)
                ("C-l" . previous-line)))
