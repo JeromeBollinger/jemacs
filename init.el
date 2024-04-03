@@ -217,6 +217,7 @@
 
 (use-package all-the-icons
   :if (display-graphic-p)
+;;  :init (all-the-icons-install-fonts)
   :ensure t)
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode)
