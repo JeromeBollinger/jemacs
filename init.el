@@ -221,8 +221,6 @@
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode)
   :ensure t)
-(use-package all-the-icons-nerd-fonts
-  :ensure t)
 
 ;; NeoTree can be opened (toggled) at projectile project root
 (defun neotree-project-dir ()
