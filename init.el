@@ -115,6 +115,7 @@
 
 (use-package lsp-mode
   :hook ((rust-mode . lsp)
+         (bicep-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :config(setq lsp-signature-auto-activate nil)
   (setq lsp-rust-server 'rust-analyzer)
