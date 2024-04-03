@@ -383,8 +383,6 @@
 (global-set-key (kbd "C-x C-r") 'rectangle-mark-mode)
 (global-set-key (kbd "C-x C-l") 'string-rectangle)
 (global-set-key (kbd "»") 'whitespace-cleanup)
-;; (global-set-key (kbd "M-p") 'drag-stuff-up)
-;; (global-set-key (kbd "M-n") 'drag-stuff-down)
 (global-set-key (kbd "TAB") 'self-insert-command)
 (electric-pair-mode t)
 (global-set-key (kbd "C-d") 'delete-forward-char)
