@@ -116,6 +116,7 @@
 (use-package lsp-mode
   :hook ((rust-mode . lsp)
          (bicep-mode . lsp)
+         (js-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :config(setq lsp-signature-auto-activate nil)
   (setq lsp-rust-server 'rust-analyzer)
@@ -342,6 +343,11 @@
 (delete-selection-mode 1)
 
 (add-hook 'js-json-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq tab-width 2)
+            (setq js-indent-level 2)))
+(add-hook 'js-mode-hook
           (lambda ()
             (make-local-variable 'js-indent-level)
             (setq tab-width 2)
