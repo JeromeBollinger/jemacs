@@ -204,6 +204,7 @@
   ;;(add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
   ;;(add-to-list 'completion-at-point-functions #'cape-line)
   :ensure t)
+  :ensure t)
 
 (use-package justl
   :ensure t)
