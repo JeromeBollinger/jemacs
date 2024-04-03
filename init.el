@@ -286,6 +286,9 @@
   :config(setq yascroll:delay-to-hide nil)
   :ensure t)
 
+(use-package exec-path-from-shell
+  :ensure t)
+
 (setq tramp-default-method "ssh")
 
 (defun jeb/ssh-tramp (arg)
