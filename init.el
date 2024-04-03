@@ -289,6 +289,13 @@
 (use-package exec-path-from-shell
   :ensure t)
 
+(use-package origami
+  :hook ((org-mode . origami-mode)
+         (lsp-mode . origami-mode))
+  :bind (:map origami-mode-map
+              ("ſ" . origami-forward-toggle-node))
+  :ensure t)
+
 (setq tramp-default-method "ssh")
 
 (defun jeb/ssh-tramp (arg)
