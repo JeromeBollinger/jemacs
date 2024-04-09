@@ -285,10 +285,6 @@
   :hook (lsp-mode . flycheck-mode)
   :ensure t)
 
-(use-package yascroll
-  :config(setq yascroll:delay-to-hide nil)
-  :ensure t)
-
 (use-package exec-path-from-shell
   :ensure t)
 
@@ -361,7 +357,6 @@
 (executable-find "npm")
 
 (exec-path-from-shell-initialize)
-(global-yascroll-bar-mode 1)
 ;; navigation
 (global-set-key (kbd "C-j") 'backward-char)
 (global-set-key (kbd "C-k") 'next-line)
