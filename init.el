@@ -356,6 +356,18 @@
 (setq exec-path (append exec-path '("~/.nvm/versions/node/v21.7.1/bin")))
 (executable-find "npm")
 
+(defun delete-word-backward (arg)
+  "Delete characters backward until encountering the beginning of a word.
+With argument ARG, do this that many times."
+  (interactive "p")
+  (delete-region (point) (progn (backward-word arg) (point))))
+
+(defun delete-word-forward (arg)
+  "Delete characters backward until encountering the beginning of a word.
+With argument ARG, do this that many times."
+  (interactive "p")
+  (delete-region (point) (progn (forward-word arg) (point))))
+
 (exec-path-from-shell-initialize)
 ;; navigation
 (global-set-key (kbd "C-j") 'backward-char)
@@ -370,6 +382,8 @@
 (global-set-key (kbd "M-ö") 'forward-word)
 (global-set-key (kbd "C-ä") 'delete-backward-char)
 (global-set-key (kbd "M-ä") 'backward-kill-word)
+(global-set-key (kbd "M-d") 'delete-word-forward)
+(global-set-key (kbd "C-<backspace>") 'delete-word-backward)
 
 (define-key input-decode-map "\C-i" [C-i])
 
