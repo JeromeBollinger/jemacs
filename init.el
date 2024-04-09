@@ -397,6 +397,8 @@ With argument ARG, do this that many times."
 (setq auto-save-timeout 1)
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq make-backup-files nil)
+(setq backup-inhibited t)
+(setq create-lockfiles nil)
 
 ;; window management
 (global-set-key (kbd "C-(") (lambda () (interactive) (split-window-right) (other-window 1)))
