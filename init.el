@@ -369,6 +369,13 @@ With argument ARG, do this that many times."
   (delete-region (point) (progn (forward-word arg) (point))))
 
 (exec-path-from-shell-initialize)
+;; isearch
+(keymap-set isearch-mode-map "<return>" 'isearch-repeat-forward)
+(keymap-set isearch-mode-map "C-j" nil)
+(keymap-set isearch-mode-map "<tab>" 'isearch-repeat-forward)
+(keymap-set isearch-mode-map "<backtab>" 'isearch-repeat-backward)
+(keymap-set isearch-mode-map "C-o" 'isearch-occur)
+
 ;; navigation
 (global-set-key (kbd "C-j") 'backward-char)
 (global-set-key (kbd "C-k") 'next-line)
@@ -399,6 +406,7 @@ With argument ARG, do this that many times."
 (setq make-backup-files nil)
 (setq backup-inhibited t)
 (setq create-lockfiles nil)
+
 
 ;; window management
 (global-set-key (kbd "C-(") (lambda () (interactive) (split-window-right) (other-window 1)))
