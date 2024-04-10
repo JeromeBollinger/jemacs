@@ -117,6 +117,7 @@
   :hook ((rust-mode . lsp)
          (bicep-mode . lsp)
          (js-mode . lsp)
+         (kotlin-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :config(setq lsp-signature-auto-activate nil)
   (setq lsp-rust-server 'rust-analyzer)
@@ -186,8 +187,7 @@
   :bind
   (:map corfu-map
         ("RET" . nil))
-  :init
-  (global-corfu-mode)
+  :init (global-corfu-mode)
   (use-package cape
     :init
     ;; Add to the global default value of `completion-at-point-functions' which is
