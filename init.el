@@ -216,6 +216,7 @@
   :ensure t)
 
 (use-package neotree
+  :config (setq neo-smart-open t)
   :ensure t)
 
 (use-package all-the-icons
@@ -377,6 +378,10 @@ With argument ARG, do this that many times."
 (keymap-set isearch-mode-map "C-o" 'isearch-occur)
 
 ;; navigation
+(setq-default cursor-type 'bar)
+
+(global-set-key (kbd "C-f") 'isearch-forward)
+(global-set-key (kbd "C-s") 'save-buffer)
 (global-set-key (kbd "C-j") 'backward-char)
 (global-set-key (kbd "C-k") 'next-line)
 (global-set-key (kbd "C-l") 'previous-line)
