@@ -51,10 +51,15 @@
   :bind ("ŋ" . magit)
   :ensure t)
 
+(use-package ace-window
+  :bind ("C-o" . ace-window)
+  :ensure t)
+
 (use-package vterm
   :bind (("ß" . new_vterm)
 	 ("æ" . vterm-copy-mode)
          :map vterm-mode-map
+         ("C-o" . ace-window)
          ("C-j" . vterm-send-C-b)
          ("C-k" . vterm-send-C-n)
          ("C-l" . vterm-send-C-p)
