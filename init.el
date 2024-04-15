@@ -377,6 +377,7 @@ With argument ARG, do this that many times."
 
 (exec-path-from-shell-initialize)
 ;; isearch
+(keymap-set isearch-mode-map "C-f" 'isearch-exit)
 (keymap-set isearch-mode-map "<return>" 'isearch-repeat-forward)
 (keymap-set isearch-mode-map "C-j" nil)
 (keymap-set isearch-mode-map "<tab>" 'isearch-repeat-forward)
