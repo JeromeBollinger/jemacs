@@ -127,7 +127,8 @@
          (lsp-mode . lsp-enable-which-key-integration))
   :config(setq lsp-signature-auto-activate nil)
   (setq lsp-rust-server 'rust-analyzer)
-  :bind ("M-," . lsp-find-references)
+  :bind (("M-," . lsp-find-references)
+  ("C-u" . lsp-execute-code-action))
   :commands lsp
   :ensure t)
 
@@ -377,7 +378,7 @@ With argument ARG, do this that many times."
 
 (exec-path-from-shell-initialize)
 ;; isearch
-(keymap-set isearch-mode-map "C-f" 'isearch-exit)
+(keymap-set isearch-mode-map "C-f" 'isearch-repeat-forward)
 (keymap-set isearch-mode-map "<return>" 'isearch-repeat-forward)
 (keymap-set isearch-mode-map "C-j" nil)
 (keymap-set isearch-mode-map "<tab>" 'isearch-repeat-forward)
