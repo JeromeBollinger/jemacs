@@ -414,11 +414,14 @@ With argument ARG, do this that many times."
 ;; Buffer management
 (global-set-key (kbd "ĸ") 'kill-this-buffer)
 (global-set-key (kbd "ł") (lambda () (interactive) (switch-to-buffer nil)))
-(setq auto-save-timeout 1)
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq make-backup-files nil)
 (setq backup-inhibited t)
 (setq create-lockfiles nil)
+(setq auto-save-interval 0)
+(custom-set-variables
+  '(auto-save-visited-mode t))
+(setq auto-save-visited-interval 1)
 
 
 ;; window management
