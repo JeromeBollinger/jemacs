@@ -332,7 +332,14 @@
 ;; dired
 (add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode -1)))
 (add-hook 'dired-mode-hook (lambda () (local-set-key (kbd "j") 'helm-find-files)))
-(global-set-key (kbd "C-x C-j") 'dired-jump)
+
+(use-package dired
+  :commands (dired dired-jump)
+  :custom ((dired-listing-switches "-Alh --group-directories-first"))
+  :bind(("C-x C-j" . dired-jump)
+        :map dired-mode-map
+         ("C-o" . ace-window))
+  :ensure nil)
 
 ;; QOL
 (fset 'yes-or-no-p 'y-or-n-p)  ;; Ask for y/n instead of yes/no
