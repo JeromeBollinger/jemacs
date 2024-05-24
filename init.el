@@ -49,6 +49,7 @@
 
 (use-package magit
   :bind ("ŋ" . magit)
+  :config (setq magit-list-refs-sortby "-creatordate")
   :ensure t)
 
 (use-package ace-window
