@@ -315,6 +315,15 @@
   (find-file (concat "/ssh:" arg ":~/" ))
   )
 
+(defun jeb/ssh-tramp-to-sudo (arg)
+  "Easier ssh tramp access by reading ssh config and switch user to root"
+  (interactive
+   (list
+    (completing-read "Select host: "
+                     (list (shell-command-to-string "cat ~/.ssh/config | grep Host\ | cut -d ' ' -f 2")))))
+  (find-file (concat "/ssh:" arg "|sudo::~/" ))
+  )
+
 (defun jeb/docker-tramp (arg)
   "Easier ssh tramp access by reading ssh config"
   (interactive
