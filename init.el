@@ -431,6 +431,7 @@ With argument ARG, do this that many times."
 ;; Buffer management
 (global-set-key (kbd "ĸ") 'kill-this-buffer)
 (global-set-key (kbd "ł") (lambda () (interactive) (switch-to-buffer nil)))
+(global-set-key (kbd "Ł") 'switch-to-buffer)
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq make-backup-files nil)
 (setq backup-inhibited t)
