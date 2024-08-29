@@ -52,8 +52,6 @@
   :config (setq magit-list-refs-sortby "-creatordate")
   :ensure t)
 
-(setq auth-sources '("~/.authinfo"))
-
 (use-package ace-window
   :bind ("C-o" . ace-window)
   :config (setq aw-keys '(?j ?k ?l ?ö ?a ?s ?d ?f ?g ?h))
