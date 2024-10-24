@@ -156,6 +156,10 @@
 (use-package rust-mode
   :ensure t)
 
+(use-package just-mode
+  :config (setq just-indent-offset 2)
+  :ensure t)
+
 (use-package highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)
   :config (setq highlight-indent-guides-method 'character)
