@@ -443,7 +443,7 @@ With argument ARG, do this that many times."
 
 
 ;; window management
-(global-set-key (kbd "C-(") (lambda () (interactive) (split-window-right) (other-window 1) (new_vterm)))
+(global-set-key (kbd "C-(") (lambda () (interactive) (split-window-right) (other-window 1)))
 (global-set-key (kbd "C-)") (lambda () (interactive) (split-window-below) (other-window 1) (new_vterm)))
 (global-set-key (kbd "ð") 'delete-window)
 (global-set-key (kbd "ŧ") 'tab-new)
