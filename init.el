@@ -231,12 +231,7 @@
   :config (setq neo-smart-open t)
   :ensure t)
 
-(use-package all-the-icons
-  :if (display-graphic-p)
-;;  :init (all-the-icons-install-fonts)
-  :ensure t)
-(use-package all-the-icons-dired
-  :hook (dired-mode . all-the-icons-dired-mode)
+(use-package nerd-icons
   :ensure t)
 
 ;; NeoTree can be opened (toggled) at projectile project root
@@ -308,6 +303,17 @@
               ("ſ" . origami-forward-toggle-node))
   :ensure t)
 
+(defun jeb/forge-pull-dispatch()
+  (interactive)
+  (forge-pull)
+  (forge-dispatch)
+)
+
+(use-package forge
+  :bind(:map magit-mode-map
+         ("N" . jeb/forge-pull-dispatch))
+  :config (setq auth-sources '("~/.authinfo"))
+  :ensure t)
 (setq tramp-default-method "ssh")
 
 (defun jeb/ssh-tramp (arg)
@@ -409,6 +415,8 @@ With argument ARG, do this that many times."
 ;; navigation
 (setq-default cursor-type 'bar)
 
+(global-set-key (kbd "¶") 'helm-show-kill-ring)
+(global-set-key (kbd "đ") 'projectile-grep)
 (global-set-key (kbd "C-f") 'isearch-forward)
 (global-set-key (kbd "C-s") 'save-buffer)
 (global-set-key (kbd "C-j") 'backward-char)
