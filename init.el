@@ -28,17 +28,13 @@
 ;; Load the dark theme by default
 (load-theme 'tango-dark t)
 
+;; (setq package-check-signature nil) ;; org-roam org-mode for some reason fail to download with signature checking on
+
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-			 ("org" . "https://orgmode.org/elpa/")
-			 ("elpa" . "https://elpa.gnu.org/packages/")))
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 (unless package-archive-contents
   (package-refresh-contents))
-
-(eval-when-compile
-  ;; Following line is not needed if use-package.el is in ~/.emacs.d
-  (add-to-list 'load-path "<path where use-package is installed>")
-  (require 'use-package))
 
 ;; Initialize use-package on non-Linux platforms
 (unless (package-installed-p 'use-package)
@@ -51,6 +47,7 @@
   :bind ("ŋ" . magit)
   :config (setq magit-list-refs-sortby "-creatordate")
   :ensure t)
+(setq magit-diff-refine-hunk 'all)
 
 (use-package ace-window
   :bind ("C-o" . ace-window)
@@ -59,7 +56,7 @@
 
 (use-package vterm
   :bind (("ß" . new_vterm)
-	 ("æ" . vterm-copy-mode)
+         ("æ" . vterm-copy-mode)
          :map vterm-mode-map
          ("C-o" . ace-window)
          ("C-j" . vterm-send-C-b)
@@ -76,6 +73,11 @@
   :hook (vterm-mode . (lambda () (setq show-trailing-whitespace nil)))
   :config (setq vterm-shell "/usr/bin/zsh")
   :ensure t)
+
+;; Emacs has not the feature to change cursor color per buffer. Therefore I would need
+;; to check every time the buffer mode when I want to have this.
+;; (add-hook 'vterm-copy-mode-hook (lambda () (set-cursor-color "#ffaf00")))
+;; (add-hook 'vterm-mode-hook (lambda () (set-cursor-color "#ffffff")))
 
 (defun new_vterm ()
   (interactive)
@@ -124,9 +126,10 @@
   :hook ((rust-mode . lsp)
          (bicep-mode . lsp)
          (js-mode . lsp)
-         (kotlin-mode . lsp)
+         (sh-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :config(setq lsp-signature-auto-activate nil)
+          (setq sh-basic-offset 2)
   (setq lsp-rust-server 'rust-analyzer)
   :bind (("M-," . lsp-find-references)
   ("C-u" . lsp-execute-code-action))
@@ -180,46 +183,51 @@
   ("«" . undo-fu-only-redo)
   :ensure t)
 
-(use-package dired-git-info
-  :config (add-hook 'dired-after-readin-hook 'dired-git-info-auto-enable)
+(use-package company
+  :config
+  (add-hook 'after-init-hook 'global-company-mode)
+  :custom
+  (:map company-active-map
+        ("C-k" . company-select-next)
+        ("C-l" . company-select-previous))
   :ensure t)
 
-(use-package corfu
-  :custom
-  (corfu-cycle t)
-  (corfu-auto t)
-  (corfu-separator ?\s)
-  (corfu-quit-at-boundary t)
-  (corfu-quit-no-match t)
-  (corfu-preselect 'directory)
-  (corfu-on-exact-match nil)
-  (corfu-scroll-margin 5)
-  (completion-styles '(basic))
-  (corfu-auto-prefix 1)
-  :bind
-  (:map corfu-map
-        ("RET" . nil))
-  :init (global-corfu-mode)
-  (use-package cape
-    :init
-    ;; Add to the global default value of `completion-at-point-functions' which is
-    ;; used by `completion-at-point'.  The order of the functions matters, the
-    ;; first function returning a result wins.  Note that the list of buffer-local
-    ;; completion functions takes precedence over the global list.
-    (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-    (add-to-list 'completion-at-point-functions #'cape-file)
-    (add-to-list 'completion-at-point-functions #'cape-elisp-block)
-    ;;(add-to-list 'completion-at-point-functions #'cape-history)
-    ;;(add-to-list 'completion-at-point-functions #'cape-keyword)
-    ;;(add-to-list 'completion-at-point-functions #'cape-tex)
-    ;;(add-to-list 'completion-at-point-functions #'cape-sgml)
-    ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345)
-    ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
-    ;;(add-to-list 'completion-at-point-functions #'cape-dict)
-    ;;(add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
-    ;;(add-to-list 'completion-at-point-functions #'cape-line)
-    :ensure t)
-  :ensure t)
+
+;;   :custom
+;;   (corfu-cycle t)
+;;   (corfu-auto t)
+;;   (corfu-separator ?\s)
+;;   (corfu-quit-at-boundary t)
+;;   (corfu-quit-no-match t)
+;;   (corfu-preselect 'directory)
+;;   (corfu-on-exact-match nil)
+;;   (corfu-scroll-margin 5)
+;;   (completion-styles '(basic))
+;;   (corfu-auto-prefix 1)
+;;   :bind
+;;   (:map corfu-map
+;;         ("RET" . nil))
+;;   :init (global-corfu-mode)
+;;   (use-package cape
+;;     :init
+;;     ;; Add to the global default value of `completion-at-point-functions' which is
+;;     ;; used by `completion-at-point'.  The order of the functions matters, the
+;;     ;; first function returning a result wins.  Note that the list of buffer-local
+;;     ;; completion functions takes precedence over the global list.
+;;     (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+;;     (add-to-list 'completion-at-point-functions #'cape-file)
+;;     (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+;;     ;;(add-to-list 'completion-at-point-functions #'cape-history)
+;;     ;;(add-to-list 'completion-at-point-functions #'cape-keyword)
+;;     ;;(add-to-list 'completion-at-point-functions #'cape-tex)
+;;     ;;(add-to-list 'completion-at-point-functions #'cape-sgml)
+;;     ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345)
+;;     ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
+;;     ;;(add-to-list 'completion-at-point-functions #'cape-dict)
+;;     ;;(add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
+;;     ;;(add-to-list 'completion-at-point-functions #'cape-line)
+;;     :ensure t)
+;;   :ensure t)
 
 (use-package justl
   :ensure t)
@@ -233,6 +241,7 @@
 
 (use-package nerd-icons
   :ensure t)
+
 
 ;; NeoTree can be opened (toggled) at projectile project root
 (defun neotree-project-dir ()
@@ -250,7 +259,7 @@
 
 ;; need another one for python stuff, since this gets re-bound
 (global-set-key (kbd "C-b") 'neotree-project-dir)
-(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+;; (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
 ;; Run sudo pamac install dotnet-sdk
 ;; Clone git@github.com:christiaan-janssen/bicep-mode.git
@@ -262,7 +271,15 @@
   :hook (bicep-mode . lsp-deferred)
   :bind (:map bicep-mode-map
          ("C-j" . backward-char))
-  :load-path "~/Documents/bicep-mode")
+  :load-path "~/projects/bicep-mode")
+
+(use-package org-modern
+  :hook (org-mode . org-modern-mode)
+  :bind (
+         (:map org-mode-map
+               ("C-j" . backward-char)
+               ("C-l" . previous-line)))
+  :ensure t)
 
 (use-package org-roam
   :custom
@@ -281,9 +298,14 @@
   :hook (helm-mode-org-roam-node-find . (lambda () (setq show-trailing-whitespace nil)))
   :ensure t)
 
-(use-package org-modern
-  :hook (org-mode . org-modern-mode)
-  :ensure t)
+(setq org-emphasis-alist
+  '(("*" (bold :foreground "Orange" ))
+    ("/" italic)
+    ("_" underline)
+    ("=" (:background "maroon" :foreground "white"))
+    ("~" (:background "deep sky blue" :foreground "MidnightBlue"))
+    ("+" (:strike-through t))))
+
 
 (use-package yasnippet
   :init (yas-global-mode)
@@ -291,6 +313,11 @@
 
 (use-package flycheck
   :hook (lsp-mode . flycheck-mode)
+  :ensure t)
+(setq ispell-program-name "/usr/bin/aspell")
+
+(use-package adoc-mode
+  :hook (adoc-mode . flyspell-mode)
   :ensure t)
 
 (use-package exec-path-from-shell
@@ -301,6 +328,9 @@
          (lsp-mode . origami-mode))
   :bind (:map origami-mode-map
               ("ſ" . origami-forward-toggle-node))
+  :ensure t)
+
+(use-package kotlin-mode
   :ensure t)
 
 (defun jeb/forge-pull-dispatch()
@@ -314,6 +344,12 @@
          ("N" . jeb/forge-pull-dispatch))
   :config (setq auth-sources '("~/.authinfo"))
   :ensure t)
+
+(add-hook 'kotlin-mode-hook
+          (lambda ()
+            (c-set-offset 'arglist-intro '+)
+            (c-set-offset 'arglist-close 0)))
+
 (setq tramp-default-method "ssh")
 
 (defun jeb/ssh-tramp (arg)
@@ -343,10 +379,21 @@
   (find-file (concat "/docker:root@" arg ":~/" ))
 )
 
+(defun jeb/open-projects-tab-in-background ()
+  "Open a new tab in the '~/projects' directory without focusing on it."
+  (interactive)
+  (let ((current-tab (tab-bar--current-tab-index)))
+    (tab-new)
+    (find-file "~/projects/")
+    (tab-bar-select-tab (1+ current-tab))))
+
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-mode))
 
 (delete-selection-mode t)
-(setq initial-buffer-choice 'vterm)
+(setq initial-buffer-choice (find-file "~/projects/roam/20231208144318-todo.org"))
+(global-linum-mode t)
+(jeb/open-projects-tab-in-background)
+
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; dired
@@ -361,13 +408,22 @@
          ("C-o" . ace-window))
   :ensure nil)
 
+(use-package dired-git-info
+  :load-path "~/projects/dired-git-info")
+
+(add-hook 'dired-after-readin-hook 'dired-git-info-auto-enable)
+
+
+
 ;; QOL
 (fset 'yes-or-no-p 'y-or-n-p)  ;; Ask for y/n instead of yes/no
 
-(set-face-attribute 'default nil :height 120)
+(set-face-attribute 'default nil :height 140)
 
 ;; Ediff
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+
 
 ;; markdown
 (setq-default fill-column 120)
@@ -403,21 +459,18 @@ With argument ARG, do this that many times."
   (interactive "p")
   (delete-region (point) (progn (forward-word arg) (point))))
 
+
+(use-package swiper-helm
+  :bind(("C-f" . swiper-helm))
+  :ensure t)
+
 (exec-path-from-shell-initialize)
-;; isearch
-(keymap-set isearch-mode-map "C-f" 'isearch-repeat-forward)
-(keymap-set isearch-mode-map "<return>" 'isearch-repeat-forward)
-(keymap-set isearch-mode-map "C-j" nil)
-(keymap-set isearch-mode-map "<tab>" 'isearch-repeat-forward)
-(keymap-set isearch-mode-map "<backtab>" 'isearch-repeat-backward)
-(keymap-set isearch-mode-map "C-o" 'isearch-occur)
 
 ;; navigation
 (setq-default cursor-type 'bar)
 
 (global-set-key (kbd "¶") 'helm-show-kill-ring)
 (global-set-key (kbd "đ") 'projectile-grep)
-(global-set-key (kbd "C-f") 'isearch-forward)
 (global-set-key (kbd "C-s") 'save-buffer)
 (global-set-key (kbd "C-j") 'backward-char)
 (global-set-key (kbd "C-k") 'next-line)
@@ -449,8 +502,18 @@ With argument ARG, do this that many times."
 (setq backup-inhibited t)
 (setq create-lockfiles nil)
 (setq auto-save-interval 0)
+
 (custom-set-variables
-  '(auto-save-visited-mode t))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(auto-save-visited-mode t)
+ '(package-selected-packages
+   '(company adoc-mode swiper-helm dired-preview helm-lsp justl dired-git-info git-info rust-mode lsp-treemacs lsp-mode spacemacs-theme idle-highlight-mode projectile helm which-key rainbow-delimiters vterm magit use-package popup async))
+ '(projectile-globally-ignored-directories
+   '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "target")))
+
 (setq auto-save-visited-interval 1)
 
 
@@ -505,7 +568,7 @@ With argument ARG, do this that many times."
   (interactive)
   (dired "/home/jeb/projects"))
 
-(defun jeb/write-date()
+(defun jeb/print-date()
   (interactive)
   (insert (shell-command-to-string "date +\"%Y %m %d\"")))
 
@@ -515,37 +578,29 @@ With argument ARG, do this that many times."
   (setq my-secure (cl-equalp secure-answer "y"))
   (browse-url (concat"http" (if my-secure "s") "://localhost:" port)))
 
+(setq browse-url-browser-function 'browse-url-chrome)
+(setq browse-url-chrome-program "/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe")
+
 (defun jeb/ask-openai (prompt)
   "Establish a connection with OpenAI."
   (interactive "sAsk OpenAI:")
   (setq response (shell-command-to-string (concat "print $(curl https://api.openai.com/v1/completions \
-		 -H 'Content-Type: application/json' \
-		 -H 'Authorization: Bearer ' \
-		 -d '{
-		 \"model\": \"text-davinci-003\",
-		 \"prompt\": \"" prompt "\",
-		 \"max_tokens\": 500,
-		 \"temperature\": 0
-		 }' 2>/dev/null" "| jq '.choices[0].text' )"))
+                 -H 'Content-Type: application/json' \
+                 -H 'Authorization: Bearer ' \
+                 -d '{
+                 \"model\": \"text-davinci-003\",
+                 \"prompt\": \"" prompt "\",
+                 \"max_tokens\": 500,
+                 \"temperature\": 0
+                 }' 2>/dev/null" "| jq '.choices[0].text' )"))
   )
 
   (cond ((get-buffer-window "AI"))
-	(t (split-window-right) (switch-to-buffer "AI"))
+        (t (split-window-right) (switch-to-buffer "AI"))
   )
   (with-current-buffer (get-buffer-create "AI") (end-of-buffer) (insert (concat prompt ":" response "
 "))))
 
-
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(helm-lsp justl dired-git-info git-info rust-mode lsp-treemacs lsp-mode spacemacs-theme idle-highlight-mode projectile helm which-key rainbow-delimiters vterm magit use-package popup async))
- '(projectile-globally-ignored-directories
-   '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "target")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -555,3 +610,4 @@ With argument ARG, do this that many times."
 
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+(set-face-bold-p 'bold nil)
