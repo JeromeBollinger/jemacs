@@ -261,18 +261,6 @@
 (global-set-key (kbd "C-b") 'neotree-project-dir)
 ;; (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
-;; Run sudo pamac install dotnet-sdk
-;; Clone git@github.com:christiaan-janssen/bicep-mode.git
-;; follow instructions
-;; run lsp server
-(use-package bicep-mode
-  :mode ("\\.bicep\\'"
-         "\\.bicepparam\\'")
-  :hook (bicep-mode . lsp-deferred)
-  :bind (:map bicep-mode-map
-         ("C-j" . backward-char))
-  :load-path "~/projects/bicep-mode")
-
 (use-package org-modern
   :hook (org-mode . org-modern-mode)
   :bind (
