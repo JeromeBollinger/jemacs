@@ -375,6 +375,41 @@
     (find-file "~/projects/")
     (tab-bar-select-tab (1+ current-tab))))
 
+(defun jeb/open-link-in-edge (input)
+  "Open INPUT in Microsoft Edge on Windows with focus.
+- If INPUT is a URL, open it directly.
+- If INPUT looks like a domain or domain + path, prepend https://
+- Otherwise, perform a Google search."
+  (interactive (list (read-string "Enter URL or search: " (thing-at-point 'url))))
+  (let* ((input (string-trim input))
+         (url
+          (cond
+           ;; Already a proper URL with scheme
+           ((string-match-p "\\`https?://" input)
+            input)
+           ;; Looks like domain or domain + path (e.g. github.com/azure)
+           ((string-match-p
+             "\\`[a-zA-Z0-9.-]+\\.[a-zA-Z]+\\(/[^\s]*\\)?\\'" input)
+            (concat "https://" input))
+           ;; Otherwise, treat as search
+           (t
+            (concat "https://www.google.com/search?q=" (url-hexify-string input)))))
+         (powershell-cmd (format "Start-Process 'msedge.exe' '%s'" url)))
+    (message "Opening in Edge: %s" url)
+    (call-process "powershell.exe" nil 0 nil "-Command" powershell-cmd)))
+
+(setq browse-url-browser-function #'jeb/open-link-in-edge)
+
+(defun jeb/open-link-browser ()
+  "Open a browser with the selected link, or prompt if nothing is selected."
+  (interactive)
+  (let ((url
+         (if (use-region-p)
+             (buffer-substring-no-properties (region-beginning) (region-end))
+           (read-string "Enter URL: " (thing-at-point 'url)))))
+    (message "Opening: %s" url)
+    (jeb/open-link-in-edge url)))
+
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-mode))
 
 (delete-selection-mode t)
