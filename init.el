@@ -346,7 +346,9 @@
 
 (delete-selection-mode t)
 (setq initial-buffer-choice (find-file "~/projects/roam/20231208144318-todo.org"))
-(global-linum-mode t)
+
+;; (global-linum-mode t)
+
 (jeb/open-projects-tab-in-background)
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
