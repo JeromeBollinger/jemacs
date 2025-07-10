@@ -122,11 +122,16 @@
   (setq idle-highlight-global-mode t)
   :ensure t)
 
+(setenv "PATH" (concat (getenv "PATH") ":$HOME/go/bin"))
+(add-to-list 'exec-path (expand-file-name "~/go/bin"))
+(setq-default tab-width 4)
+
 (use-package lsp-mode
   :hook ((rust-mode . lsp)
          (bicep-mode . lsp)
          (js-mode . lsp)
          (sh-mode . lsp)
+         (go-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :config(setq lsp-signature-auto-activate nil)
           (setq sh-basic-offset 2)
