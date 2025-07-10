@@ -126,6 +126,21 @@
 (add-to-list 'exec-path (expand-file-name "~/go/bin"))
 (setq-default tab-width 4)
 
+(defun jeb/ask-kai (input)
+  "Ai prompt"
+  (interactive "sEnter input for CLI tool: ")
+  (let* ((cli-command (format "kai \"%s\"" input))
+         (output (shell-command-to-string cli-command))
+         (buffer (get-buffer-create "*kai*")))
+    (with-current-buffer buffer
+      (read-only-mode -1)
+      (erase-buffer)
+      (insert output)
+      (markdown-mode)
+      (read-only-mode 1))
+    (display-buffer buffer)))
+
+
 (use-package lsp-mode
   :hook ((rust-mode . lsp)
          (bicep-mode . lsp)
