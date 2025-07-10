@@ -25,9 +25,6 @@
 (setq modus-themes-mode-line '(borderless))
 (setq modus-themes-mode-line '(accented borderless padded))
 
-;; Load the dark theme by default
-(load-theme 'tango-dark t)
-
 ;; (setq package-check-signature nil) ;; org-roam org-mode for some reason fail to download with signature checking on
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
