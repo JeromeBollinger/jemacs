@@ -106,6 +106,8 @@
   :config (helm-mode 1)
   (setq helm-move-to-line-cycle-in-source nil)
   :ensure t)
+(helm-mode 1)
+(setq helm-M-x-always-save-history t)
 
 
 (use-package projectile
