@@ -269,8 +269,14 @@
   :hook (adoc-mode . flyspell-mode)
   :ensure t)
 
+
+(setq shell-file-name "/bin/zsh")
 (use-package exec-path-from-shell
-  :ensure t)
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+
+(exec-path-from-shell-copy-envs '("GEMINI_API_TOKEN"))
 
 (use-package origami
   :hook ((org-mode . origami-mode)
