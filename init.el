@@ -212,70 +212,11 @@
         ("C-l" . company-select-previous))
   :ensure t)
 
-
-;;   :custom
-;;   (corfu-cycle t)
-;;   (corfu-auto t)
-;;   (corfu-separator ?\s)
-;;   (corfu-quit-at-boundary t)
-;;   (corfu-quit-no-match t)
-;;   (corfu-preselect 'directory)
-;;   (corfu-on-exact-match nil)
-;;   (corfu-scroll-margin 5)
-;;   (completion-styles '(basic))
-;;   (corfu-auto-prefix 1)
-;;   :bind
-;;   (:map corfu-map
-;;         ("RET" . nil))
-;;   :init (global-corfu-mode)
-;;   (use-package cape
-;;     :init
-;;     ;; Add to the global default value of `completion-at-point-functions' which is
-;;     ;; used by `completion-at-point'.  The order of the functions matters, the
-;;     ;; first function returning a result wins.  Note that the list of buffer-local
-;;     ;; completion functions takes precedence over the global list.
-;;     (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-;;     (add-to-list 'completion-at-point-functions #'cape-file)
-;;     (add-to-list 'completion-at-point-functions #'cape-elisp-block)
-;;     ;;(add-to-list 'completion-at-point-functions #'cape-history)
-;;     ;;(add-to-list 'completion-at-point-functions #'cape-keyword)
-;;     ;;(add-to-list 'completion-at-point-functions #'cape-tex)
-;;     ;;(add-to-list 'completion-at-point-functions #'cape-sgml)
-;;     ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345)
-;;     ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
-;;     ;;(add-to-list 'completion-at-point-functions #'cape-dict)
-;;     ;;(add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
-;;     ;;(add-to-list 'completion-at-point-functions #'cape-line)
-;;     :ensure t)
-;;   :ensure t)
-
 (use-package justl
   :ensure t)
 
 (use-package yaml-mode
   :ensure t)
-
-(use-package neotree
-  :config (setq neo-smart-open t)
-  :ensure t)
-
-(use-package nerd-icons
-  :ensure t)
-
-
-;; NeoTree can be opened (toggled) at projectile project root
-(defun neotree-project-dir ()
-    "Open NeoTree using the git root."
-    (interactive)
-    (let ((project-dir (projectile-project-root))
-          (file-name (buffer-file-name)))
-      (neotree-toggle)
-      (if project-dir
-          (if (neo-global--window-exists-p)
-              (progn
-                (neotree-dir project-dir)
-                (neotree-find file-name)))
-        (message "Could not find git project root."))))
 
 ;; need another one for python stuff, since this gets re-bound
 (global-set-key (kbd "C-b") 'neotree-project-dir)
