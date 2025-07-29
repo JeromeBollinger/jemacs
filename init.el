@@ -25,9 +25,6 @@
 (setq modus-themes-mode-line '(borderless))
 (setq modus-themes-mode-line '(accented borderless padded))
 
-;; Load the dark theme by default
-(load-theme 'tango-dark t)
-
 ;; (setq package-check-signature nil) ;; org-roam org-mode for some reason fail to download with signature checking on
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
@@ -71,7 +68,7 @@
          ("M-ä" . vterm-send-meta-backspace)
          )
   :hook (vterm-mode . (lambda () (setq show-trailing-whitespace nil)))
-  :config (setq vterm-shell "/usr/bin/zsh")
+  :config (setq vterm-shell "/usr/bin/zsh" vterm-timer-delay 0.01)
   :ensure t)
 
 ;; Emacs has not the feature to change cursor color per buffer. Therefore I would need
@@ -102,14 +99,13 @@
       :map helm-find-files-map
       ("C-l" . helm-previous-line)
       ("<tab>" . helm-execute-persistent-action)
-      ("C-j" . helm-find-files-up-one-level)
       ("C-ö" . helm-execute-persistent-action)
       ("C-;" . helm-execute-persistent-action)
       ("t" . self-insert-command)))
   :config (helm-mode 1)
   (setq helm-move-to-line-cycle-in-source nil)
   :ensure t)
-
+(helm-mode 1)
 
 (use-package projectile
   :ensure t)
@@ -124,6 +120,7 @@
 
 (use-package lsp-mode
   :hook ((rust-mode . lsp)
+         (go-mode . lsp)
          (bicep-mode . lsp)
          (js-mode . lsp)
          (sh-mode . lsp)
@@ -132,13 +129,25 @@
           (setq sh-basic-offset 2)
   (setq lsp-rust-server 'rust-analyzer)
   :bind (("M-," . lsp-find-references)
-  ("C-u" . lsp-execute-code-action))
+  ("C-." . lsp-execute-code-action))
   :commands lsp
   :ensure t)
 
 (use-package lsp-ui
   :config(setq lsp-ui-doc-show-with-cursor t)
   :ensure t)
+
+(lsp-register-custom-settings
+ '(("gopls.completeUnimported" t t)
+   ("gopls.staticcheck" t t)))
+
+(add-hook 'go-mode-hook
+  (lambda ()
+    (setq-default)
+    (setq tab-width 2)
+    (setq standard-indent 2)
+    (setq indent-tabs-mode nil)))
+
 
 (use-package drag-stuff
   :config(setq drag-stuff-global-mode t)
@@ -150,10 +159,6 @@
 
 (use-package helm-lsp
   :commands helm-lsp-workspace-symbol
-  :ensure t)
-
-(use-package lsp-treemacs
-  :commands lsp-treemacs-errors-list
   :ensure t)
 
 (use-package rust-mode
@@ -170,7 +175,7 @@
   :ensure t)
 
 ;; frame options
-(add-to-list 'default-frame-alist '(alpha-background . 96))
+(add-to-list 'default-frame-alist '(alpha-background . 91))
 
 (use-package spacemacs-theme
   :config (load-theme 'spacemacs-dark t)
@@ -186,7 +191,7 @@
 (use-package company
   :config
   (add-hook 'after-init-hook 'global-company-mode)
-  :custom
+  :bind
   (:map company-active-map
         ("C-k" . company-select-next)
         ("C-l" . company-select-previous))
@@ -232,34 +237,17 @@
 (use-package justl
   :ensure t)
 
-(use-package yaml-mode
+(use-package visual-regexp
+  :bind (("ħ" . vr/replace)
+         )
   :ensure t)
 
-(use-package neotree
-  :config (setq neo-smart-open t)
+(use-package yaml-mode
   :ensure t)
 
 (use-package nerd-icons
   :ensure t)
 
-
-;; NeoTree can be opened (toggled) at projectile project root
-(defun neotree-project-dir ()
-    "Open NeoTree using the git root."
-    (interactive)
-    (let ((project-dir (projectile-project-root))
-          (file-name (buffer-file-name)))
-      (neotree-toggle)
-      (if project-dir
-          (if (neo-global--window-exists-p)
-              (progn
-                (neotree-dir project-dir)
-                (neotree-find file-name)))
-        (message "Could not find git project root."))))
-
-;; need another one for python stuff, since this gets re-bound
-(global-set-key (kbd "C-b") 'neotree-project-dir)
-;; (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
 (use-package org-modern
   :hook (org-mode . org-modern-mode)
@@ -303,6 +291,11 @@
   :hook (lsp-mode . flycheck-mode)
   :ensure t)
 (setq ispell-program-name "/usr/bin/aspell")
+
+(use-package flymake-shellcheck
+  :commands flymake-shellcheck-load
+  :init
+  (add-hook 'sh-mode-hook 'flymake-shellcheck-load))
 
 (use-package adoc-mode
   :hook (adoc-mode . flyspell-mode)
@@ -414,21 +407,19 @@
 
 (delete-selection-mode t)
 (setq initial-buffer-choice (find-file "~/projects/roam/20231208144318-todo.org"))
-(global-linum-mode t)
+
 (jeb/open-projects-tab-in-background)
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; dired
-(add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode -1)))
-(add-hook 'dired-mode-hook (lambda () (local-set-key (kbd "j") 'helm-find-files)))
-
 (use-package dired
   :commands (dired dired-jump)
   :custom ((dired-listing-switches "-Alh --group-directories-first"))
   :bind(("C-x C-j" . dired-jump)
         :map dired-mode-map
-         ("C-o" . ace-window))
+        ("C-o" . ace-window)
+        ("j" . helm-find-files))
   :ensure nil)
 
 (use-package dired-git-info
@@ -451,6 +442,7 @@
 ;; markdown
 (setq-default fill-column 120)
 (add-hook 'markdown-mode-hook #'auto-fill-mode)
+(add-hook 'markdown-mode-hook #'flyspell-mode)
 
 (delete-selection-mode 1)
 
@@ -492,6 +484,8 @@ With argument ARG, do this that many times."
 ;; navigation
 (setq-default cursor-type 'bar)
 
+
+(global-set-key (kbd "”") 'jeb/open-link-browser)
 (global-set-key (kbd "¶") 'helm-show-kill-ring)
 (global-set-key (kbd "đ") 'projectile-grep)
 (global-set-key (kbd "C-s") 'save-buffer)
@@ -500,6 +494,9 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "C-l") 'previous-line)
 (global-set-key (kbd "C-ö") 'forward-char)
 (global-set-key (kbd "C-;") 'forward-char)
+
+(global-set-key (kbd "M-p") 'drag-stuff-up)
+(global-set-key (kbd "M-n") 'drag-stuff-down)
 
 (global-set-key (kbd "M-j") 'backward-word)
 (global-set-key (kbd "M-k") 'move-beginning-of-line)
