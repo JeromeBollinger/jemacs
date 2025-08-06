@@ -403,6 +403,11 @@
     (message "Opening: %s" url)
     (jeb/open-link-in-edge url)))
 
+(defun jeb/open-in-vscode ()
+  "Open vscode in current directory."
+  (interactive)
+  (shell-command "code .")
+)
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-mode))
 
 (delete-selection-mode t)
