@@ -175,7 +175,7 @@
   :ensure t)
 
 ;; frame options
-(add-to-list 'default-frame-alist '(alpha-background . 91))
+(add-to-list 'default-frame-alist '(alpha-background . 95))
 
 (use-package spacemacs-theme
   :config (load-theme 'spacemacs-dark t)
