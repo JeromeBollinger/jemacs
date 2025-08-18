@@ -408,6 +408,48 @@
   (interactive)
   (shell-command "code .")
 )
+
+(defun jeb/move-word (forward kill)
+  "Move or kill a word in DIRECTION ('forward or 'backward). Stops at line boundaries unless already at one."
+  (let ((pos (point))
+        (line-end (line-end-position))
+        (line-begin (line-beginning-position)))
+    (cond
+     ;; Allow crossing boundary if already at edge
+     ((and forward (= pos line-end))
+      (if kill (delete-char 1) (forward-char 1)))
+     ((and (not forward) (= pos line-begin))
+      (if kill (backward-delete-char 1) (backward-char 1)))
+     ;; Clamp within line
+     (t
+      (let ((target
+             (save-excursion
+               (if forward (forward-word 1) (backward-word 1))
+                 (cond
+                  ((and forward (> (point) line-end)) line-end)
+                  ((and (not forward) (< (point) line-begin)) line-begin)
+                  (t (point))))))
+        (message "target: %d position: %d" target (point))
+        (if kill (kill-region pos target) (goto-char target))
+        )))))
+
+(defun jeb/forward-word-stop-at-eol ()
+  (interactive)
+  (jeb/move-word t nil))
+
+(defun jeb/backward-word-stop-at-bol ()
+  (interactive)
+  (jeb/move-word nil nil))
+
+(defun jeb/kill-word-stop-at-eol ()
+  (interactive)
+  (jeb/move-word t t))
+
+(defun jeb/backward-kill-word-stop-at-bol ()
+  (interactive)
+  (jeb/move-word nil t))
+
+
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-mode))
 
 (delete-selection-mode t)
@@ -467,19 +509,6 @@
 (setq exec-path (append exec-path '("~/.nvm/versions/node/v21.7.1/bin")))
 (executable-find "npm")
 
-(defun delete-word-backward (arg)
-  "Delete characters backward until encountering the beginning of a word.
-With argument ARG, do this that many times."
-  (interactive "p")
-  (delete-region (point) (progn (backward-word arg) (point))))
-
-(defun delete-word-forward (arg)
-  "Delete characters backward until encountering the beginning of a word.
-With argument ARG, do this that many times."
-  (interactive "p")
-  (delete-region (point) (progn (forward-word arg) (point))))
-
-
 (use-package swiper-helm
   :bind(("C-f" . swiper-helm))
   :ensure t)
@@ -503,14 +532,14 @@ With argument ARG, do this that many times."
 (global-set-key (kbd "M-p") 'drag-stuff-up)
 (global-set-key (kbd "M-n") 'drag-stuff-down)
 
-(global-set-key (kbd "M-j") 'backward-word)
+(global-set-key (kbd "M-j") 'jeb/backward-word-stop-at-bol)
 (global-set-key (kbd "M-k") 'move-beginning-of-line)
 (global-set-key (kbd "M-l") 'move-end-of-line)
-(global-set-key (kbd "M-ö") 'forward-word)
+(global-set-key (kbd "M-ö") 'jeb/forward-word-stop-at-eol)
 (global-set-key (kbd "C-ä") 'delete-backward-char)
 (global-set-key (kbd "M-ä") 'backward-kill-word)
-(global-set-key (kbd "M-d") 'delete-word-forward)
-(global-set-key (kbd "C-<backspace>") 'delete-word-backward)
+(global-set-key (kbd "M-d") 'jeb/kill-word-stop-at-eol)
+(global-set-key (kbd "C-<backspace>") 'jeb/backward-kill-word-stop-at-bol)
 
 (define-key input-decode-map "\C-i" [C-i])
 
