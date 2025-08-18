@@ -626,6 +626,42 @@
   (interactive)
   (insert (shell-command-to-string "date +\"%Y %m %d\"")))
 
+(defvar remove-lines-matching-last-regexp ""
+  "Stores the last regexp used in `remove-lines-matching`.")
+
+(defvar keep-lines-matching-last-regexp ""
+  "Stores the last regexp used in `remove-lines-matching`.")
+
+(defun jeb/remove-lines-matching (regexp)
+  "Remove all lines in the current buffer that match the given REGEXP.
+If called interactively, use the last used regexp as default."
+  (interactive
+   (list (read-string
+          (if (string= remove-lines-matching-last-regexp "")
+              "Enter regex to match lines for deletion: "
+            (format "Enter regex to match lines for deletion (default: %s): "
+                    remove-lines-matching-last-regexp))
+          nil nil remove-lines-matching-last-regexp)))
+  (setq remove-lines-matching-last-regexp regexp)
+  (save-excursion
+    (goto-char (point-min))
+    (flush-lines regexp)))
+
+(defun jeb/keep-lines-matching (regexp)
+  "Retain all lines in the current buffer that match the given REGEXP.
+If called interactively, use the last used regexp as default."
+  (interactive
+   (list (read-string
+          (if (string= remove-lines-matching-last-regexp "")
+              "Enter regex to match lines to keep: "
+            (format "Enter regex to match lines to keep: (default: %s): "
+                    keep-lines-matching-last-regexp))
+          nil nil keep-lines-matching-last-regexp)))
+  (setq keep-lines-matching-last-regexp regexp)
+  (save-excursion
+    (goto-char (point-min))
+    (keep-lines regexp)))
+
 (defun jeb/localhost (port &optional secure-answer)
   (interactive "sPort: \nsSecure? (y/n)")
   (setq my-secure nil)
