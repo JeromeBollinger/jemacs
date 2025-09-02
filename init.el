@@ -409,17 +409,17 @@
   (shell-command "code .")
 )
 
-(defun jeb/move-word (forward kill)
-  "Move or kill a word in DIRECTION ('forward or 'backward). Stops at line boundaries unless already at one."
+(defun jeb/move-word (forward delete)
+  "Move or delete a word in DIRECTION ('forward or 'backward). Stops at line boundaries unless already at one."
   (let ((pos (point))
         (line-end (line-end-position))
         (line-begin (line-beginning-position)))
     (cond
      ;; Allow crossing boundary if already at edge
      ((and forward (= pos line-end))
-      (if kill (delete-char 1) (forward-char 1)))
+      (if delete (delete-char 1) (forward-char 1)))
      ((and (not forward) (= pos line-begin))
-      (if kill (backward-delete-char 1) (backward-char 1)))
+      (if delete (backward-delete-char 1) (backward-char 1)))
      ;; Clamp within line
      (t
       (let ((target
@@ -430,7 +430,7 @@
                   ((and (not forward) (< (point) line-begin)) line-begin)
                   (t (point))))))
         (message "target: %d position: %d" target (point))
-        (if kill (kill-region pos target) (goto-char target))
+        (if delete (delete-region pos target) (goto-char target))
         )))))
 
 (defun jeb/forward-word-stop-at-eol ()
